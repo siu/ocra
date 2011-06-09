@@ -579,6 +579,7 @@ EOF
       gems = sort_uniq(gems)
       gem_files = []
       gems.each do |gempath, fullgemname|
+        Ocra.msg "Detected gem #{fullgemname}"
         gemspecpath = gempath / 'specifications' / "#{fullgemname}.gemspec"
         @gemspecs << gemspecpath
         spec = Gem::Specification.load(gemspecpath)
@@ -617,10 +618,11 @@ EOF
                 include.push(:extras)
               end
             end
+	    break
           end
         end
 
-        Ocra.msg "Detected gem #{spec.full_name} (#{include.join(', ')})"
+        Ocra.msg "\tincluding #{include.join(', ')}"
 
         gem_root = gempath / "gems" / spec.full_name
         gem_root_files = nil
